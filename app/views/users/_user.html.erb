@@ -1,0 +1,31 @@
+<div id="<%= dom_id user %>">
+  <p>
+    <strong>Name:</strong>
+    <%= user.name %>
+  </p>
+
+  <p>
+    <strong>Email:</strong>
+    <%= user.email %>
+  </p>
+
+  <p>
+    <strong>Avatar:</strong>
+    <% user.avatar.each do |avatar| %>
+      <div style="display:block">
+        <%= avatar.content_type %>
+        <%= image_tag avatar.variant(:thumb) %>
+        <%= button_to 'Remove', {:controller => :users, :action => 'destroy_avatar', 
+                                  :id => user.id, 
+                                  avatar_id: avatar.id 
+                                }, method: :delete, 
+                                form: { data: {
+                                  turbo_confirm: 'Are you sure?'
+                                }, style: "display: inline"
+                                } 
+          %>
+      </div>
+    <% end %>
+  </p>
+
+</div>
